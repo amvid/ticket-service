@@ -7,6 +7,12 @@
     "php": ">=8.1",
     "ext-ctype": "*",
     "ext-iconv": "*",
+    "doctrine/doctrine-bundle": "^2.8",
+    "doctrine/doctrine-migrations-bundle": "^3.2",
+    "doctrine/orm": "^2.14",
+    "easycorp/easyadmin-bundle": "*",
+    "ramsey/uuid": "*",
+    "ramsey/uuid-doctrine": "*",
     "symfony/console": "6.2.*",
     "symfony/dotenv": "6.2.*",
     "symfony/flex": "^2",
@@ -15,7 +21,9 @@
     "symfony/yaml": "6.2.*"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-latest"
+    "roave/security-advisories": "dev-latest",
+    "symfony/maker-bundle": "*",
+    "symfony/web-profiler-bundle": "6.2.*"
   },
   "config": {
     "allow-plugins": {
