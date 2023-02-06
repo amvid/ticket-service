@@ -22,7 +22,7 @@ ssh:
 .PHONY: test
 test:
 	@docker-compose -f docker-compose.test.yaml up -d
-	@docker exec test-app sh -c "APP_ENV=test ./bin/console --no-interaction d:m:m"
-	@docker exec test-app sh -c "APP_ENV=test ./bin/console d:f:l --no-interaction"
-	@docker exec test-app sh -c "APP_ENV=test ./vendor/bin/phpunit"
+	@docker exec ticket-test-app sh -c "APP_ENV=test ./bin/console --no-interaction d:m:m"
+	@docker exec ticket-test-app sh -c "APP_ENV=test ./bin/console d:f:l --no-interaction"
+	@docker exec ticket-test-app sh -c "APP_ENV=test ./vendor/bin/phpunit"
 	@docker-compose -f docker-compose.test.yaml down

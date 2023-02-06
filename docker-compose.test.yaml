@@ -15,7 +15,7 @@ services:
     links:
       - ticket-service-test-db
     ports:
-      - "9003:9000"
+      - "9004:9000"
     volumes:
       - .:/var/www/ticket-service
       - .docker/php/config/php.ini:/usr/local/etc/php/conf.d/php.ini
@@ -26,7 +26,7 @@ services:
     image: mariadb:10.9.3
     container_name: ticket-test-db
     ports:
-      - "6306:3306"
+      - "7306:3306"
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u ticket-service --password=qwerty
       start_period: 2s
