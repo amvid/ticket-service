@@ -1,0 +1,13 @@
+name: ci
+
+on: [ push ]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+      - name: Run tests
+        run: make test
+
