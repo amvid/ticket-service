@@ -48,6 +48,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isActive;
 
+    public function __construct(?UuidInterface $id = null)
+    {
+        if ($id) {
+            $this->id = $id;
+        }
+    }
+
     public function __toString(): string
     {
         return $this->email;
