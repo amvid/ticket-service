@@ -1,0 +1,42 @@
+version: "3.8"
+
+networks:
+  ticket-service-test-network:
+
+services:
+  ticket-service-test-app:
+    build:
+      context: .
+      dockerfile: .docker/php/test.Dockerfile
+    container_name: ticket-test-app
+    depends_on:
+      ticket-service-test-db:
+        condition: service_healthy
+    links:
+      - ticket-service-test-db
+    ports:
+      - "9003:9000"
+    volumes:
+      - .:/var/www/ticket-service
+      - .docker/php/config/php.ini:/usr/local/etc/php/conf.d/php.ini
+    networks:
+      - ticket-service-test-network
+
+  ticket-service-test-db:
+    image: mariadb:10.9.3
+    container_name: ticket-test-db
+    ports:
+      - "6306:3306"
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u ticket-service --password=qwerty
+      start_period: 2s
+      interval: 2s
+      timeout: 5s
+      retries: 5
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-qwerty}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-qwerty}
+      MYSQL_USER: ${DB_USER:-ticket-service}
+      MYSQL_DATABASE: ${DB_DATABASE:-ticket-service}
+    networks:
+      - ticket-service-test-network
