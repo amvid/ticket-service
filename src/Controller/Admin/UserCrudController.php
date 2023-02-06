@@ -32,6 +32,9 @@ class UserCrudController extends AbstractCrudController
 
         if ($this->isGranted(User::ADMIN)) {
             yield ArrayField::new('roles');
+        }
+
+        if ($this->isGranted(User::MANAGER)) {
             yield BooleanField::new('isActive');
         }
     }
