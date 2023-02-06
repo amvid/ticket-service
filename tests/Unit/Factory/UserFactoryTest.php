@@ -8,7 +8,6 @@ use App\Entity\User;
 use App\Factory\UserFactory;
 use App\Factory\UserFactoryInterface;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFactoryTest extends TestCase
