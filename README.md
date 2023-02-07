@@ -1,4 +1,4 @@
-# WIP TicketService
+# TicketService
 
 ## How it works?
 
@@ -49,6 +49,29 @@ php bin/console app:create-user
 
 ```bash
 make test
+```
+
+### API
+
+POST /api/v1/tickets
+
+```json
+{
+  "category": "refund-request",
+  "info": "I want to apply for a refund",
+  "clientName": "John Doe",
+  "clientEmail": "johndoe@gmail.com",
+  "clientPhone": "1234567890",
+  "additionalInfo": "So the problem is..."
+}
+```
+
+Response 200
+
+```json
+{
+  "id": "e938541f-865b-487d-a76d-088408e9e30e"
+}
 ```
 
 License
