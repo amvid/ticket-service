@@ -24,6 +24,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public const MANAGER = 'ROLE_MANAGER';
     public const AGENT = 'ROLE_AGENT';
 
+    public const ROLES = [
+        self::ADMIN,
+        self::MANAGER,
+        self::AGENT,
+    ];
+
     #[ORM\Id]
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
@@ -117,7 +123,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return $this->firstName . ' ' . $this->lastName;
     }
 
     /**
@@ -147,8 +153,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password = null): self
     {
+        if (empty($password)) {
+            return $this;
+        }
+
         $this->password = $password;
 
         return $this;

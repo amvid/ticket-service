@@ -17,39 +17,45 @@ class UserFixture extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $admin = new User();
-        $admin
-            ->setFirstName('John')
-            ->setLastName('Admin')
-            ->setEmail('johnadmin@gmail.com')
-            ->setRoles([User::ADMIN])
-            ->setIsActive(true);
+        $users = [
+            [
+                'firstName' => 'John',
+                'lastName' => 'Admin',
+                'email' => 'johnadmin@gmail.com',
+                'roles' => [User::ADMIN],
+                'isActive' => true,
+            ],
+            [
+                'firstName' => 'John',
+                'lastName' => 'Manager',
+                'email' => 'johnmanager@gmail.com',
+                'roles' => [User::MANAGER],
+                'isActive' => true,
+            ],
+            [
+                'firstName' => 'John',
+                'lastName' => 'Agent',
+                'email' => 'johnagent@gmail.com',
+                'roles' => [User::AGENT],
+                'isActive' => true,
+            ],
+        ];
 
-        $admin->setPassword($this->hasher->hashPassword($admin, 'qwerty'));
+        foreach ($users as $user) {
+            $agent = new User();
+            $agent
+                ->setFirstName($user['firstName'])
+                ->setLastName($user['lastName'])
+                ->setEmail($user['email'])
+                ->setRoles($user['roles'])
+                ->setIsActive($user['isActive']);
 
-        $smanager = new User();
-        $smanager
-            ->setFirstName('John')
-            ->setLastName('Manager')
-            ->setEmail('johnmanager@gmail.com')
-            ->setRoles([User::MANAGER])
-            ->setIsActive(true);
+            $agent->setPassword($this->hasher->hashPassword($agent, 'qwerty'));
+            $manager->persist($agent);
 
-        $smanager->setPassword($this->hasher->hashPassword($smanager, 'qwerty'));
+            $this->addReference($user['roles'][0], $agent);
+        }
 
-        $agent = new User();
-        $agent
-            ->setFirstName('John')
-            ->setLastName('Agent')
-            ->setEmail('johnmagent@gmail.com')
-            ->setRoles([User::AGENT])
-            ->setIsActive(true);
-
-        $agent->setPassword($this->hasher->hashPassword($agent, 'qwerty'));
-
-        $manager->persist($smanager);
-        $manager->persist($admin);
-        $manager->persist($agent);
         $manager->flush();
     }
 }

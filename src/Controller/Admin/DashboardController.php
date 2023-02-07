@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
+use App\Entity\Ticket;
 use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
@@ -19,7 +21,10 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        return $this->render('admin/index.html.twig');
+        return $this->redirectToRoute('admin', [
+            'crudAction' => Action::INDEX,
+            'crudControllerFqcn' => TicketCrudController::class,
+        ]);
     }
 
     public function configureDashboard(): Dashboard
@@ -37,8 +42,8 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Users', 'fa fa-user', User::class)->setPermission(User::MANAGER);
         yield MenuItem::linkToCrud('Categories', 'fa fa-navicon', Category::class)->setPermission(User::MANAGER);
+        yield MenuItem::linkToCrud('Tickets', 'fa fa-ticket', Ticket::class)->setPermission(User::AGENT);
     }
 }
