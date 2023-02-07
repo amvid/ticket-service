@@ -67,6 +67,7 @@ class TicketFactory implements TicketFactoryInterface
 
     public function setAgent(?User $agent): TicketFactoryInterface
     {
+        $this->ticket->setAgent($agent);
         return $this;
     }
 
