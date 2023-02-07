@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
+use App\Entity\Ticket;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -40,5 +41,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Users', 'fa fa-user', User::class)->setPermission(User::MANAGER);
         yield MenuItem::linkToCrud('Categories', 'fa fa-navicon', Category::class)->setPermission(User::MANAGER);
+        yield MenuItem::linkToCrud('Tickets', 'fa fa-ticket', Ticket::class)->setPermission(User::AGENT);
     }
 }
