@@ -41,7 +41,7 @@ class UserFixture extends Fixture
         $agent
             ->setFirstName('John')
             ->setLastName('Agent')
-            ->setEmail('johnmagent@gmail.com')
+            ->setEmail('johnagent@gmail.com')
             ->setRoles([User::AGENT])
             ->setIsActive(true);
 
