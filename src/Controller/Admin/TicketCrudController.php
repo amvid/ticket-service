@@ -37,6 +37,8 @@ class TicketCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         $crud->setPageTitle(Crud::PAGE_INDEX, 'Tickets');
+        $crud->setSearchFields(['agent.firstName', 'agent.email', 'clientPhone', 'clientName', 'clientEmail']);
+        $crud->setDefaultSort(['createdAt' => 'DESC']);
 
         return $crud->showEntityActionsInlined();
     }
