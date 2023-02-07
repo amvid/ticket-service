@@ -59,7 +59,7 @@ class TicketFixture extends Fixture implements DependentFixtureInterface
         ];
 
         foreach ($tickets as $ticket) {
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0; $i < 25; $i++) {
                 $newTicket = new Ticket();
                 $newTicket
                     ->setStatus($ticket['status'])
