@@ -36,11 +36,39 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        $crud->setPageTitle(Crud::PAGE_INDEX, 'Users');
+
+        return $crud->showEntityActionsInlined();
+    }
+
     public function configureActions(Actions $actions): Actions
     {
-        if (!$this->isGranted(User::ADMIN)) {
-            $actions->remove(Crud::PAGE_INDEX, Action::NEW);
-        }
+        // add
+        $actions->add(Crud::PAGE_INDEX, Action::DETAIL);
+
+        // permissions
+        $actions->setPermission(Action::NEW, User::ADMIN);
+
+        // update
+        $actions->update(
+            Crud::PAGE_INDEX,
+            Action::EDIT,
+            fn(Action $action) => $action->setIcon('fa fa-pencil')->setLabel(false)
+        );
+
+        $actions->update(
+            Crud::PAGE_INDEX,
+            Action::DETAIL,
+            fn(Action $action) => $action->setIcon('fa fa-eye')->setLabel(false)
+        );
+
+        $actions->update(
+            Crud::PAGE_INDEX,
+            Action::DELETE,
+            fn(Action $action) => $action->setIcon('fa fa-trash-o')->addCssClass('text-danger')->setLabel(false),
+        );
 
         return $actions;
     }

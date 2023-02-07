@@ -36,8 +36,9 @@ class TicketCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud
-            ->showEntityActionsInlined();
+        $crud->setPageTitle(Crud::PAGE_INDEX, 'Tickets');
+
+        return $crud->showEntityActionsInlined();
     }
 
     public function configureFilters(Filters $filters): Filters
@@ -95,12 +96,6 @@ class TicketCrudController extends AbstractCrudController
             fn(Action $action) => $action->setIcon('fa fa-trash-o')->addCssClass('text-danger')->setLabel(false),
         );
 
-        $actions->update(
-            Crud::PAGE_DETAIL,
-            Action::DELETE,
-            fn(Action $action) => $action->setIcon('fa fa-trash-o')->addCssClass('text-danger')->setLabel(false),
-        );
-
         // remove
         $actions->remove(Crud::PAGE_INDEX, Action::NEW);
 
@@ -112,7 +107,7 @@ class TicketCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('id')->hideOnForm()->hideOnDetail();
+        yield TextField::new('id')->onlyOnIndex();
         yield AssociationField::new('category');
         yield AssociationField::new('agent');
         yield ChoiceField::new('status')->setChoices(Ticket::STATUSES);
@@ -127,7 +122,7 @@ class TicketCrudController extends AbstractCrudController
 
         yield FormField::addPanel('Timestamp')->setIcon('fa fa-clock')->hideOnForm();
         yield DateTimeField::new('createdAt')->hideOnForm();
-        yield DateTimeField::new('updatedAt')->hideOnForm()->hideOnIndex();
+        yield DateTimeField::new('updatedAt')->onlyOnDetail();
         yield DateTimeField::new('completedAt')->hideOnForm();
     }
 
