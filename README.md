@@ -56,4 +56,4 @@ License
 
 This software is published under the [MIT License](LICENSE.md)
 
-[1]: https://github.com/amvid/geo-service/tree/main/LICENSE.md
+[1]: https://github.com/amvid/ticket-service/tree/main/LICENSE.md
