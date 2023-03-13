@@ -5,19 +5,19 @@ up:
 .PHONY: install
 install:
 	@docker-compose up -d
-	@docker exec app sh -c "composer install"
+	@docker exec ticket-app sh -c "composer install"
 
 .PHONY: migration
 migration:
-	docker exec app sh -c "php bin/console make migration"
+	docker exec ticket-app sh -c "php bin/console make:migration"
 
 .PHONY: migrate
 migrate:
-	@docker exec app sh -c "php bin/console d:m:m"
+	@docker exec ticket-app sh -c "php bin/console d:m:m"
 
 .PHONY: ssh
 ssh:
-	@docker exec -it app sh
+	@docker exec -it ticket-app sh
 
 .PHONY: test
 test:
