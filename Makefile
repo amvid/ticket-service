@@ -7,6 +7,10 @@ install:
 	@docker-compose up -d
 	@docker exec ticket-app sh -c "composer install"
 
+.PHONY: update
+update:
+	@docker exec ticket-app sh -c "composer update"
+
 .PHONY: migration
 migration:
 	docker exec ticket-app sh -c "php bin/console make:migration"
