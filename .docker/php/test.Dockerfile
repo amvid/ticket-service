@@ -11,4 +11,6 @@ RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
 COPY . .
 
+ENV APP_ENV=test
+
 RUN composer install

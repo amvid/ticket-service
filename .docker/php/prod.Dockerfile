@@ -10,12 +10,18 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY composer.json composer.lock ./
 
-ENV APP_ENV=dev
-
-RUN composer install --no-scripts --no-interaction
+RUN composer install --no-dev --no-scripts --prefer-dist --no-progress --no-interaction
 
 RUN ./vendor/bin/rr get-binary --location /usr/local/bin
 
 COPY . .
 
-CMD ["rr", "serve", "-c", ".rr.dev.yaml"]
+ENV APP_ENV=prod
+
+RUN composer dump-autoload --optimize && \
+    composer check-platform-reqs && \
+    php bin/console cache:warmup
+
+EXPOSE 8080
+
+CMD ["rr", "serve"]
