@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.2-alpine
 
 
 RUN apk --no-cache add git unzip zip icu-dev libzip-dev $PHPIZE_DEPS

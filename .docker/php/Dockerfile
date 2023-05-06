@@ -1,16 +1,19 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.2-alpine
 
-RUN apk --no-cache add git unzip zip icu-dev libzip-dev $PHPIZE_DEPS
-
-RUN docker-php-ext-install pdo pdo_mysql zip
-
-RUN docker-php-ext-configure intl && docker-php-ext-install intl
+RUN apk add --no-cache linux-headers autoconf openssl-dev g++ make pcre-dev icu-dev zlib-dev libzip-dev && \
+    docker-php-ext-install bcmath intl opcache zip sockets pdo pdo_mysql && \
+    apk del --purge autoconf g++ make
 
 WORKDIR /var/www/ticket-service
 
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+COPY composer.json composer.lock ./
+
+RUN composer install --no-scripts --no-interaction
+
+RUN ./vendor/bin/rr get-binary --location /usr/local/bin
 
 COPY . .
 
-RUN composer install
+CMD ["rr", "serve", "-c", ".rr.dev.yaml"]
